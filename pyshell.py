@@ -13,10 +13,12 @@ urllib3.disable_warnings()
 TAG_RE = re.compile(r'<[^>]+>')
 neotermcolor.readline_always_safe = True
 
-def remove_html(text):
+def remove_html(text:str):
+   text = text.replace("\\n", "\n")
    return TAG_RE.sub('', text).strip()
 
 def send_command(command, webshell, method, param="code"):
+   # print(f"command: {command}")
    headers = {"User-Agent":"Mozilla/6.4 (Windows NT 11.1) Gecko/2010102 Firefox/99.0",
    "Authorization":args.auth, "Cookie":args.cookies, "Content-Type":"application/x-www-form-urlencoded"}
    params = {param.strip():command.strip()}
@@ -45,7 +47,7 @@ if __name__ == "__main__":
   -------------- by @JoelGMSec & @3v4Si0N ---------------
  """
 
-print (colored(banner, "green"))
+print(colored(banner, "green"))
 parser = argparse.ArgumentParser()
 parser.add_argument("url", help="Webshell URL", type=str)
 parser.add_argument("method", help="HTTP Method to execute command (GET or POST)", type=str)
